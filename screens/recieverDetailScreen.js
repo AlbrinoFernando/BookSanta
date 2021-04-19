@@ -12,7 +12,7 @@ export default class RecieverDetailsScreen extends React.Component{
 
         this.state = {
             userId: firebase.auth().currentUser.email,
-            reciverId: this.props.navigation.getParam('details')["user_id"],
+            recieverId: this.props.navigation.getParam('details')["user_id"],
             requestId: this.props.navigation.getParam('details')["request_id"],
             bookName: this.props.navigation.getParam('details')["book_name"],
             bookDetails: this.props.navigation.getParam('details')["book_reason"],
@@ -34,7 +34,22 @@ export default class RecieverDetailsScreen extends React.Component{
         })
     }
 
+    addNotification = () => {
+        var message = this.state.userId + " has shown interest in donating " + this.state.bookName;
+        db.collection("all_notifications").add({
+            target_user_id: this.state.recieverId,
+            donor_id: this.state.userId,
+            request_id: this.state.requestId,
+            book_name: this.state.bookName,
+            date: firebase.firestore.FieldValue.serverTimestamp(),
+            notification_status: "unread",
+            message: message
+        })
+    }
+
     getRecieverDetails(){
+        //console.log(this.state.recieverId)
+
         db.collection("users").where("email_id", "==" , this.state.recieverId).get().then(snapshot=>{
             snapshot.forEach(doc=>{
                 this.setState({
@@ -44,7 +59,6 @@ export default class RecieverDetailsScreen extends React.Component{
                 })
             })
         });
-        console.log("e moment")
 
         db.collection("requested_books").where("request_id", "==", this.state.requestId).get().then(snapshot=>{
             snapshot.forEach(doc=>{
@@ -100,16 +114,17 @@ export default class RecieverDetailsScreen extends React.Component{
                     </Card>
                 </View>
 
-                <View>
+                <View style={{alignItems: "center", marginTop: 20}}>
                     {
                         this.state.recieverId !== this.state.userId
                         ? (<TouchableOpacity onPress={
                             ()=>{
                                 this.updateBookStatus()
+                                this.addNotification()
                                 this.props.navigation.navigate("MyDonationScreen")
                             }
                         }>
-                            <Text>I want to donate</Text>
+                            <Text style={{fontSize: 25}}>I want to donate</Text>
                         </TouchableOpacity>)
 
                         : (<View></View>)
