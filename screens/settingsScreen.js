@@ -50,7 +50,7 @@ export default class SettingsScreen extends React.Component{
 
     componentDidMount(){
         this.getUserDetails()
-    }
+    } 
 
     resetUserPassword=(oldPassword, newPassword)=>{
         this.setState({
