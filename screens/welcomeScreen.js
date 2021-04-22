@@ -205,6 +205,13 @@ export default class WelcomeScreen extends React.Component{
             }}>
                 <Text style={styles.signUpButtonText}>Register</Text>
             </TouchableOpacity>
+
+            <TouchableOpacity style={styles.signUpButton}
+             onPress={()=>{
+              this.props.navigation.navigate("forgotPasswordScreen")
+            }}>
+                <Text style={styles.signUpButtonText}>Forgot Password?</Text>
+            </TouchableOpacity>
           </View>
       </View>
     )
