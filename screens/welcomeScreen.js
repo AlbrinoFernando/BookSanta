@@ -16,8 +16,13 @@ export default class WelcomeScreen extends React.Component{
       address: "",
       contact: "",
       confirmPassword: "",
-      isModalVisible: false
+      isModalVisible: false,
     }
+  }
+
+  signUpWithGoogle =()=>{
+    var provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithRedirect(provider);
   }
 
   userSignUp=(email, password, confirmPassword)=>{
@@ -30,7 +35,8 @@ export default class WelcomeScreen extends React.Component{
           first_name: this.state.firstName,
           last_name: this.state.lastName,
           address: this.state.address,
-          contact: this.state.contact
+          contact: this.state.contact,
+          isBookRequestActive: false
         })
         return Alert.alert("User added succesfully!", "", [{
             text: "Okay",
@@ -194,6 +200,13 @@ export default class WelcomeScreen extends React.Component{
                 this.login(this.state.emailId, this.state.password)
             }}>
             <Text style={styles.signInButtonText}>Sign In</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.signInButton}
+            onPress={()=>{
+                this.signUpWithGoogle();
+            }}>
+            <Text style={styles.signInButtonText}>Sign In w/ Google</Text>
             </TouchableOpacity>
 
             <View style={styles.buttonContainer}>

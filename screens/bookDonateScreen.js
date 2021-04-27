@@ -24,7 +24,6 @@ export default class BookDonateScreen extends React.Component{
             this.setState({
                 requestedBookList: requestedBookList
             })
-            console.log(this.state.requestedBookList)
         })
     }
     
@@ -49,7 +48,6 @@ export default class BookDonateScreen extends React.Component{
             <ListItem.Chevron
             onPress = {
                 ()=>{
-                    console.log(item)
                     this.props.navigation.navigate("recieverDetails", {"details": item});
                 }
             }/>

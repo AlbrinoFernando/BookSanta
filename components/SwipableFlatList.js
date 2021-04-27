@@ -6,76 +6,6 @@ import db from "../config";
 import firebase from "firebase";
 import { SwipeableListView } from "react-native";
 
-// export default class SwipableFlatList extends React.Component{
-//     constructor(props){
-//         super(props);
-//         this.state = {
-//             allNotifications: this.props.allNotifications
-//         }
-//     }
-
-//     updateNotification = (notification) => {
-//         db.collection("all_notifications").doc(notification.doc_id).update({
-//             notification_status: "read"
-//         })
-//     }
-
-//     onSwipeValueChange = (swipeData) => {
-//         var allNotifications = this.state.allNotifications;
-
-//         const {key, value} = swipeData;
-
-//         if(value < -Dimensions.get("window").width){
-//             const newData = [...allNotifications]
-//             this.updateNotification(allNotifications[key])
-//             newData.splice(key, 1)
-
-//             this.setState({
-//                 allNotifications: newData
-//             })
-//         }
-//     } 
-
-//     renderItem = (data) => (
-//         <Animated.View>
-//             <ListItem
-//             title={data.item.book_name}
-//             subtitle={data.item.message}
-//             bottomDivider/>
-//         </Animated.View>
-//     )
-    
-
-//     renderHiddenItem = () => (
-//         <View>
-//             <Text>
-//                 Mark As Read
-//             </Text>
-//         </View>
-//     )
-
-//     componentDidMount(){
-//         console.log("------------------------")
-//         console.log(this.props.allNotifications)
-//     }
-
-//     render(){
-//         return(
-//             <View>
-//                 <SwipeListView
-//                 disableRightSwipe
-//                 data={this.state.allNotifications}
-//                 renderItem={this.renderItem}
-//                 renderHiddenItem={this.renderHiddenItem}
-//                 onSwipeValueChange={this.onSwipeValueChange}
-//                 keyExtractor={(item, index)=>{index.toString()}}
-//                 rightOpenValue={-Dimensions.get("window").width} previewRowKey={"0"} previewOpenValue={-40} previewOpenDelay={3000}/>
-//             </View>
-//         )
-//     }
-// }
-
-
 export default class SwipeableFlatlist extends Component {
     constructor(props) {
       super(props);
@@ -105,13 +35,12 @@ export default class SwipeableFlatlist extends Component {
   
     renderItem = data => (
       <Animated.View>
-        <ListItem
-          leftElement={<Icon name="book" type="font-awesome" color="#696969" />}
-          title={data.item.book_name}
-          titleStyle={{ color: "black", fontWeight: "bold" }}
-          subtitle={data.item.message}
-          bottomDivider
-        />
+        <ListItem bottomDivider>
+            <ListItem.Content>
+                <ListItem.Title>{data.item.book_name}</ListItem.Title>
+                <ListItem.Subtitle>{data.item.message}</ListItem.Subtitle>
+            </ListItem.Content>
+        </ListItem>
       </Animated.View>
     );
   
