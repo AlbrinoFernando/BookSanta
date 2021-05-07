@@ -94,7 +94,7 @@ export default class CustomSideBarMenu extends React.Component{
                     <DrawerItems {...this.props}/>
                 </View>
 
-                <View>
+                <View style={{marginBottom: 50, marginLeft: 15}}>
                     <TouchableOpacity onPress={
                         ()=>{
                             this.props.navigation.navigate("welcomeScreen")

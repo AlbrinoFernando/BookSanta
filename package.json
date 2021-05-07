@@ -19,6 +19,7 @@
     "react-native-drawer": "^2.5.1",
     "react-native-elements": "^3.2.0",
     "react-native-gesture-handler": "^1.10.1",
+    "react-native-google-books": "^1.0.4",
     "react-native-reanimated": "^1.13.2",
     "react-native-screens": "^2.17.1",
     "react-native-swipe-list-view": "^3.2.7",
