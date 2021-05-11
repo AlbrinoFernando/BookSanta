@@ -22,7 +22,7 @@ export default class WelcomeScreen extends React.Component{
   }
 
   onSignIn = (googleUser) => {
-    console.log('Google Auth Response', googleUser);
+    //console.log('Google Auth Response', googleUser);
     // We need to register an Observer on Firebase Auth to make sure auth is initialized.
     var unsubscribe = firebase.auth().onAuthStateChanged((firebaseUser) => {
       unsubscribe();
@@ -34,26 +34,24 @@ export default class WelcomeScreen extends React.Component{
             googleUser.accessToken
         );
         // Sign in with credential from the Google user.
-        firebase.auth().signInWithCredential(credential).then(function(){
-          db.collection("users").add({
-            email_id: result.user.email,
-            first_name: result.user.given_name,
-            last_name: result.user.family_name,
-            address: "",
-            contact: "",
-            isBookRequestActive: false
-          })
-          this.props.navigation.navigate("donateBooks")
-        }).catch((error) => {
-          // Handle Errors here.
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          // The email of the user's account used.
-          var email = error.email;
-          // The firebase.auth.AuthCredential type that was used.
-          var credential = error.credential;
-          // ...
-        });
+        firebase.auth().signInWithCredential(credential).then(function(result){
+          console.log(result.user.email);
+          console.log("--------------")
+          console.log(result.additionalUserInfo.profile.given_name)
+          if(result.additionalUserInfo.isNewUser){
+            db.collection("users").add({
+              email_id: result.user.email,
+              first_name: result.additionalUserInfo.profile.given_name,
+              last_name: result.additionalUserInfo.profile.family_name,
+              address: "",
+              contact: "",
+              isBookRequestActive: false
+            })
+          }
+        }).catch(error=>{
+          var errorCode = error.message
+          Alert.alert(errorCode);
+        })
       } else {
         console.log('User already signed-in Firebase.');
       }
@@ -93,6 +91,7 @@ export default class WelcomeScreen extends React.Component{
       return { error: true };
     }
   }
+
   userSignUp=(email, password, confirmPassword)=>{
     if(password !== confirmPassword){
       return Alert.alert("Your passwords don't match!")

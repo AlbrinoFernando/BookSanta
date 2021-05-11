@@ -6,6 +6,7 @@ import WelcomeScreen from "./screens/welcomeScreen";
 import ForgotPasswordScreen from "./screens/forgotPasswordScreen";
 import {AppDrawerNavigator} from "./components/AppDrawerNavigator"
 import {createSwitchNavigator, createAppContainer} from "react-navigation"
+import LoadingScreen from "./screens/loadingScreen";
 
 export default class App extends React.Component{
   render(){
@@ -16,6 +17,7 @@ export default class App extends React.Component{
 }
 
 const switchNavigator = createSwitchNavigator({
+  loadingScreen: {screen: LoadingScreen},
   welcomeScreen: {screen: WelcomeScreen},
   forgotPasswordScreen: {screen: ForgotPasswordScreen},
   drawer: {screen: AppDrawerNavigator},
